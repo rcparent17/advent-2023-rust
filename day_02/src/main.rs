@@ -1,5 +1,5 @@
-use std::{io::BufRead, iter};
 use regex::Regex;
+use std::io::BufRead;
 
 const RED_MAX: u32 = 12;
 const GREEN_MAX: u32 = 13;
@@ -22,7 +22,8 @@ fn main() {
 
     let filename: &str = &args[1];
     let file = std::fs::File::open(filename).unwrap();
-    let input_lines: Vec<String> = std::io::BufReader::new(file).lines()
+    let input_lines: Vec<String> = std::io::BufReader::new(file)
+        .lines()
         .map(|l| l.expect("Could not parse line"))
         .map(|x| x.trim().to_string())
         .collect();
@@ -45,10 +46,17 @@ fn part_1(lines: Vec<String>) -> u32 {
     let mut solution: u32 = 0;
     for line in lines {
         let mut valid_game: bool = true;
-        let game_id: u32 = id_regex.captures(&line).unwrap().get(1).unwrap().as_str().parse::<u32>().unwrap();
+        let game_id: u32 = id_regex
+            .captures(&line)
+            .unwrap()
+            .get(1)
+            .unwrap()
+            .as_str()
+            .parse::<u32>()
+            .unwrap();
         //println!("{}", line);
-        let handful_data: &str = line.split(":").collect::<Vec<&str>>()[1];
-        let handfuls: Vec<&str> = handful_data.split(";").collect();
+        let handful_data: &str = line.split(':').collect::<Vec<&str>>()[1];
+        let handfuls: Vec<&str> = handful_data.split(';').collect();
         for handful in handfuls {
             for cap in handful_regex.captures_iter(handful) {
                 let num: u32 = cap.get(1).unwrap().as_str().parse::<u32>().unwrap();
@@ -58,7 +66,7 @@ fn part_1(lines: Vec<String>) -> u32 {
                     "red" => num <= RED_MAX,
                     "green" => num <= GREEN_MAX,
                     "blue" => num <= BLUE_MAX,
-                    _ => false
+                    _ => false,
                 };
                 println!("{} {} {}", num, color, valid_game);
                 if !valid_game {
@@ -70,7 +78,7 @@ fn part_1(lines: Vec<String>) -> u32 {
             }
         }
         println!("{}", valid_game);
-        if valid_game{
+        if valid_game {
             println!("{}", game_id);
             solution += game_id;
         }

@@ -8,11 +8,6 @@ const BLUE_MAX: u32 = 14;
 const HANDFUL_REGEX_PATTERN: &str = r"\s*(?<number>\d+)\s(?<color>green|red|blue)\s*";
 const GAME_ID_REGEX_PATTERN: &str = r"Game\s(?<game_id>\d+)";
 
-pub struct CubeGame {
-    pub id: u32,
-    pub handfuls: [(u32, u32, u32)], // list of tuples: (# r seen, # g seen, # b seen) per handful
-}
-
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     if args.len() != 2 {

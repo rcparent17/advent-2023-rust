@@ -54,32 +54,24 @@ fn part_1(lines: Vec<String>) -> u32 {
             .as_str()
             .parse::<u32>()
             .unwrap();
-        //println!("{}", line);
         let handful_data: &str = line.split(':').collect::<Vec<&str>>()[1];
         let handfuls: Vec<&str> = handful_data.split(';').collect();
-        for handful in handfuls {
+        'handful_loop: for handful in handfuls {
             for cap in handful_regex.captures_iter(handful) {
                 let num: u32 = cap.get(1).unwrap().as_str().parse::<u32>().unwrap();
                 let color = cap.get(2).unwrap().as_str();
-                //rintln!("{} {}", num, color);
                 valid_game = match color {
                     "red" => num <= RED_MAX,
                     "green" => num <= GREEN_MAX,
                     "blue" => num <= BLUE_MAX,
                     _ => false,
                 };
-                println!("{} {} {}", num, color, valid_game);
                 if !valid_game {
-                    break;
+                    break 'handful_loop;
                 }
             }
-            if !valid_game {
-                break;
-            }
         }
-        println!("{}", valid_game);
         if valid_game {
-            println!("{}", game_id);
             solution += game_id;
         }
     }

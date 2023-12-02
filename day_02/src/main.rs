@@ -91,14 +91,20 @@ fn part_2(lines: Vec<String>) -> u32 {
                 let color = cap.get(2).unwrap().as_str();
                 match color {
                     "red" => {
-                        if num > min_needed[0] {min_needed[0] = num}
-                    },
+                        if num > min_needed[0] {
+                            min_needed[0] = num
+                        }
+                    }
                     "green" => {
-                        if num > min_needed[1] {min_needed[1] = num}
-                    },
+                        if num > min_needed[1] {
+                            min_needed[1] = num
+                        }
+                    }
                     "blue" => {
-                        if num > min_needed[2] {min_needed[2] = num}
-                    },
+                        if num > min_needed[2] {
+                            min_needed[2] = num
+                        }
+                    }
                     _ => (),
                 };
             }
